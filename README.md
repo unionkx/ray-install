@@ -18,11 +18,16 @@ Install & Upgrade v2ray-core and geodata
 ```
 bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/v2ray-install.sh)
 ```
+Remove v2ray, except json and logs
+```
+bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/v2ray-install.sh) --remove
+```
 ```
 systemctl enable v2ray
 systemctl start v2ray
 systemctl stop v2ray
 systemctl restart v2ray
+systemctl disable v2ray
 ```
 ## 安装xray
 ```
@@ -38,13 +43,18 @@ installed: /etc/systemd/system/xray@.service
 ### xray安装脚本
 Install & Upgrade Xray-core and geodata
 ```
-bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/xray-install.sh)
+bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/xray-install.sh) @ install
+```
+Remove Xray, except json and logs
+```
+bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/xray-install.sh) @ remove
 ```
 ```
 systemctl enable xray
 systemctl start xray
 systemctl stop xray
 systemctl restart xray
+systemctl disable xray
 ```
 ## 开启BBR
 ```
