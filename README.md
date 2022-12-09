@@ -1,6 +1,6 @@
 # ray-install
 
-## v2ray
+## 安装v2ray
 ```
 installed: /usr/local/bin/v2ray
 installed: /usr/local/bin/v2ctl
@@ -18,11 +18,13 @@ Install & Upgrade v2ray-core and geodata
 ```
 bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/v2ray-install.sh)
 ```
+```
 systemctl enable v2ray
 systemctl start v2ray
 systemctl stop v2ray
 systemctl restart v2ray
-## xray
+```
+## 安装xray
 ```
 installed: /usr/local/bin/xray
 installed: /usr/local/etc/xray/*.json
