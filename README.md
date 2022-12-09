@@ -22,7 +22,6 @@ systemctl enable v2ray
 systemctl start v2ray
 systemctl stop v2ray
 systemctl restart v2ray
-
 ## xray
 ```
 installed: /usr/local/bin/xray
@@ -34,7 +33,6 @@ installed: /var/log/xray/error.log
 installed: /etc/systemd/system/xray.service
 installed: /etc/systemd/system/xray@.service
 ```
-
 ### xray安装脚本
 Install & Upgrade Xray-core and geodata
 ```
