@@ -61,6 +61,7 @@ systemctl disable xray
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
+reboot
 lsmod | grep bbr
 ```
 tcp_bbr                20480  0
