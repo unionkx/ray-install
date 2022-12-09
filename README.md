@@ -41,11 +41,11 @@ installed: /etc/systemd/system/xray.service
 installed: /etc/systemd/system/xray@.service
 ```
 ### xray安装脚本
-Install & Upgrade Xray-core and geodata
+Install & Upgrade xray-core and geodata
 ```
 bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/xray-install.sh) @ install
 ```
-Remove Xray, except json and logs
+Remove xray, except json and logs
 ```
 bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/xray-install.sh) @ remove
 ```
