@@ -14,7 +14,7 @@ installed: /etc/systemd/system/v2ray.service
 installed: /etc/systemd/system/v2ray@.service
 ```
 ### v2ray安装脚本
-// 安裝執行檔和 .dat 資料檔
+Install & Upgrade v2ray-core and geodata
 ```
 bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/v2ray-install.sh)
 ```
@@ -35,7 +35,7 @@ installed: /var/log/xray/error.log
 ```
 
 ### xray安装脚本
-// 安裝執行檔和 .dat 資料檔
+Install & Upgrade Xray-core and geodata
 ```
 bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/xray-install.sh)
 ```
