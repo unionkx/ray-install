@@ -29,6 +29,7 @@ systemctl stop v2ray
 systemctl restart v2ray
 systemctl disable v2ray
 ```
+
 ## xray
 ```
 installed: /usr/local/bin/xray
@@ -57,7 +58,6 @@ Remove Xray, include json and logs
 ```
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ remove --purge
 ```
-
 ```
 systemctl enable xray
 systemctl start xray
@@ -65,6 +65,7 @@ systemctl stop xray
 systemctl restart xray
 systemctl disable xray
 ```
+
 ## BBR
 ```
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
