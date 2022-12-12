@@ -1,6 +1,6 @@
 # ray-install
 
-## 安装v2ray
+## v2ray
 ```
 installed: /usr/local/bin/v2ray
 installed: /usr/local/bin/v2ctl
@@ -13,7 +13,7 @@ installed: /var/log/v2ray/error.log
 installed: /etc/systemd/system/v2ray.service
 installed: /etc/systemd/system/v2ray@.service
 ```
-### v2ray安装脚本
+### v2ray install
 Install & Upgrade v2ray-core and geodata
 ```
 bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/v2ray-install.sh)
@@ -29,7 +29,7 @@ systemctl stop v2ray
 systemctl restart v2ray
 systemctl disable v2ray
 ```
-## 安装xray
+## xray
 ```
 installed: /usr/local/bin/xray
 installed: /usr/local/etc/xray/*.json
@@ -40,15 +40,24 @@ installed: /var/log/xray/error.log
 installed: /etc/systemd/system/xray.service
 installed: /etc/systemd/system/xray@.service
 ```
-### xray安装脚本
+### xray install
 Install & Upgrade xray-core and geodata
 ```
-bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/xray-install.sh) @ install
+bash <(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh) @ install
+```
+Install & Upgrade Xray-core to a pre-release version
+```
+bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh)" @ install --version 1.6.6
 ```
 Remove xray, except json and logs
 ```
-bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/xray-install.sh) @ remove
+bash <(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh) @ remove
 ```
+Remove Xray, include json and logs
+```
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ remove --purge
+```
+
 ```
 systemctl enable xray
 systemctl start xray
@@ -56,7 +65,7 @@ systemctl stop xray
 systemctl restart xray
 systemctl disable xray
 ```
-## 开启BBR
+## BBR
 ```
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
