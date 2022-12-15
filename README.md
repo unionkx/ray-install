@@ -44,19 +44,19 @@ installed: /etc/systemd/system/xray@.service
 ### xray install
 Install & Upgrade xray-core and geodata
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh)" @ install
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ install
 ```
 Install & Upgrade Xray-core to a pre-release version
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh)" @ install --version 1.6.6-2
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ install --version 1.6.6-2
 ```
 Remove xray, except json and logs
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh)" @ remove
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ remove
 ```
 Remove Xray, include json and logs
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh)" @ remove --purge
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ remove --purge
 ```
 ```
 systemctl enable xray
