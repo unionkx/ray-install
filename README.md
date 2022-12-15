@@ -56,7 +56,7 @@ bash <(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh) @ 
 ```
 Remove Xray, include json and logs
 ```
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ remove --purge
+bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh)" @ remove --purge
 ```
 ```
 systemctl enable xray
