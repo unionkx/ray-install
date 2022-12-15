@@ -44,7 +44,7 @@ installed: /etc/systemd/system/xray@.service
 ### xray install
 Install & Upgrade xray-core and geodata
 ```
-bash <(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh) @ install
+bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh)" @ install
 ```
 Install & Upgrade Xray-core to a pre-release version
 ```
@@ -52,7 +52,7 @@ bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh
 ```
 Remove xray, except json and logs
 ```
-bash <(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh) @ remove
+bash -c "$(curl -L https://github.com/unionkx/ray-install/master/xray-install.sh)" @ remove
 ```
 Remove Xray, include json and logs
 ```
