@@ -48,7 +48,7 @@ bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-instal
 ```
 Install & Upgrade Xray-core to a pre-release version
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ install --version 1.7.5
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta
 ```
 Remove xray, except json and logs
 ```
