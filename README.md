@@ -14,19 +14,19 @@ installed: /etc/systemd/system/xray@.service
 ### xray install
 Install & Upgrade xray-core and geodata
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ install
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.sh)" @ install
 ```
 Install & Upgrade Xray-core to a pre-release version
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ install --beta
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.sh)" @ install --beta
 ```
 Remove xray, except json and logs
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ remove
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.sh)" @ remove
 ```
 Remove Xray, include json and logs
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/master/xray-install.sh)" @ remove --purge
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.sh)" @ remove --purge
 ```
 ```
 systemctl enable xray
@@ -52,11 +52,15 @@ installed: /etc/systemd/system/v2ray@.service
 ### v2ray install
 Install & Upgrade v2ray-core and geodata
 ```
-bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/v2ray-install.sh)
+bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/main/v2ray-install.sh)
 ```
-Remove v2ray, except json and logs
+Install & Upgrade geoip.dat & geosite.dat
 ```
-bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/master/v2ray-install.sh) --remove
+bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/main/install-dat-release.sh)
+```
+Remove v2ray
+```
+bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/main/v2ray-install.sh) --remove
 ```
 ```
 systemctl enable v2ray
@@ -71,7 +75,7 @@ systemctl disable v2ray
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
-reboot
 lsmod | grep bbr
+reboot
 ```
 tcp_bbr                20480  0
