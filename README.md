@@ -4,10 +4,13 @@
 ```
 installed: /usr/local/bin/xray
 installed: /usr/local/etc/xray/*.json
+
 installed: /usr/local/share/xray/geoip.dat
 installed: /usr/local/share/xray/geosite.dat
+
 installed: /var/log/xray/access.log
 installed: /var/log/xray/error.log
+
 installed: /etc/systemd/system/xray.service
 installed: /etc/systemd/system/xray@.service
 ```
@@ -15,6 +18,10 @@ installed: /etc/systemd/system/xray@.service
 Install & Upgrade xray-core and geodata
 ```
 bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.sh)" @ install
+```
+Update geoip.dat and geosite.dat only
+```
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.sh)" @ install-geodata
 ```
 Install & Upgrade Xray-core to a pre-release version
 ```
@@ -56,7 +63,7 @@ bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/main/v2ray-
 ```
 Install & Upgrade geoip.dat & geosite.dat
 ```
-bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/main/install-dat-release.sh)
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
 ```
 Remove v2ray
 ```
