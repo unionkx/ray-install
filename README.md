@@ -41,7 +41,7 @@ bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/main/v2ray-
 ```
 Install & Upgrade geoip.dat & geosite.dat
 ```
-bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
+bash <(curl -L https://raw.githubusercontent.com/unionkx/ray-install/main/v2ray-install-dat.sh)
 ```
 Remove v2ray
 ```
