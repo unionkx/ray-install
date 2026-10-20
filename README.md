@@ -7,7 +7,7 @@ bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.
 ```
 Update geoip.dat and geosite.dat only
 ```
-bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.sh)" @ install-geodata
+bash -c "$(curl -L https://github.com/unionkx/ray-install/raw/main/xray-install.sh)" @ update-geodata
 ```
 Install & Upgrade Xray-core to a pre-release version
 ```
