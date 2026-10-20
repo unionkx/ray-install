@@ -29,8 +29,8 @@ systemd service
 ```
 systemctl enable xray
 systemctl start xray
-systemctl stop xray
 systemctl restart xray
+systemctl stop xray
 systemctl disable xray
 ```
 
@@ -55,8 +55,8 @@ systemd service
 ```
 systemctl enable v2ray
 systemctl start v2ray
-systemctl stop v2ray
 systemctl restart v2ray
+systemctl stop v2ray
 systemctl disable v2ray
 ```
 
