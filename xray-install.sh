@@ -102,6 +102,9 @@ PROXY=''
 # --purge
 PURGE='0'
 
+# --manually-restart-later
+NO_RESTART='0'
+
 # Installation status
 GEODATA='0'
 CONFIG_NEW='0'
@@ -338,6 +341,9 @@ judgment_parameters() {
       LOGROTATE_TIME="$2"
       shift
       ;;
+    '--manually-restart-later')
+      NO_RESTART='1'
+      ;;
     *)
       echo "$0: unknown option -- -"
       return 1
@@ -369,6 +375,14 @@ judgment_parameters() {
       return 1
     fi
   fi
+  if [[ "$INSTALL" -eq '1' ]] && ((FORCE + NO_RESTART > 1)); then
+    echo "-f/--force and --manually-restart-later can't be used together."
+    return 1
+  fi
+  if [[ "$INSTALL" -eq '1' ]] && ((REINSTALL + NO_RESTART > 1)); then
+    echo "--reinstall and --manually-restart-later can't be used together."
+    return 1
+  fi
 }
 
 verify_local_archive() {
@@ -393,10 +407,10 @@ verify_local_archive() {
     print tolower(value)
   }' "$digest_file")"
   case "$checksum" in
-    '' | *[!0-9a-f]*)
-      echo "error: Missing or invalid SHA256 digest in $digest_file"
-      return 1
-      ;;
+  '' | *[!0-9a-f]*)
+    echo "error: Missing or invalid SHA256 digest in $digest_file"
+    return 1
+    ;;
   esac
   if [ "${#checksum}" -ne 64 ]; then
     echo "error: Missing or invalid SHA256 digest in $digest_file"
@@ -621,17 +635,17 @@ install_xray() {
   # Install Xray configuration file to $JSON_PATH
   # shellcheck disable=SC2153
   if [[ -z "$JSONS_PATH" ]] && [[ ! -d "$JSON_PATH" ]]; then
-    install -d "$JSON_PATH"
-    install -m 644 -o 0 -g 0 /dev/null "${JSON_PATH}/config.json"
+    install -d -m 750 -o 0 -g xray "$JSON_PATH"
+    install -m 640 -o 0 -g xray /dev/null "${JSON_PATH}/config.json"
     echo "{}" >"${JSON_PATH}/config.json"
     CONFIG_NEW='1'
   fi
 
   # Install Xray configuration file to $JSONS_PATH
   if [[ -n "$JSONS_PATH" ]] && [[ ! -d "$JSONS_PATH" ]]; then
-    install -d "$JSONS_PATH"
+    install -d -m 750 -o 0 -g xray "$JSONS_PATH"
     for BASE in 00_log 01_api 02_dns 03_routing 04_policy 05_inbounds 06_outbounds 07_stats 08_fakedns 09_metrics 10_observatory 11_geodata 12_env 99_version; do
-      install -m 644 -o 0 -g 0 /dev/null "${JSONS_PATH}/${BASE}.json"
+      install -m 640 -o 0 -g xray /dev/null "${JSONS_PATH}/${BASE}.json"
       echo '{}' >"${JSONS_PATH}/${BASE}.json"
     done
     CONFDIR='1'
@@ -830,17 +844,16 @@ update_geodata() {
       exit 1
     fi
   }
-  local download_link_geoip="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
-  local download_link_geosite="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
-  local file_ip='geoip.dat'
-  local file_dlc='geosite.dat'
-  local file_site='geosite.dat'
+  local file_ip='geoip-full.dat'
+  local file_site='geosite-expand.dat'
+  local download_link_geoip="https://github.com/XTLS/Xray-rules-dat/releases/latest/download/${file_ip}"
+  local download_link_geosite="https://github.com/XTLS/Xray-rules-dat/releases/latest/download/${file_site}"
   local dir_tmp
   dir_tmp="$(mktemp -d)"
   TMP_PATHS+=("$dir_tmp")
   [[ "$XRAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '0' ]] && echo "warning: Xray was not installed"
-  download_geodata $download_link_geoip $file_ip
-  download_geodata $download_link_geosite $file_dlc
+  download_geodata "$download_link_geoip" "$file_ip"
+  download_geodata "$download_link_geosite" "$file_site"
   cd "${dir_tmp}" || exit
   for i in "${dir_tmp}"/*.sha256sum; do
     if ! sha256sum -c "${i}"; then
@@ -850,8 +863,8 @@ update_geodata() {
   done
   cd - >/dev/null || exit 1
   install_geodata_dir
-  install -m 644 -o xray -g xray "${dir_tmp}"/${file_dlc} "${DAT_PATH}"/${file_site}
-  install -m 644 -o xray -g xray "${dir_tmp}"/${file_ip} "${DAT_PATH}"/${file_ip}
+  install -m 644 -o xray -g xray "${dir_tmp}/${file_site}" "${DAT_PATH}/geosite.dat"
+  install -m 644 -o xray -g xray "${dir_tmp}/${file_ip}" "${DAT_PATH}/geoip.dat"
   rm -r "${dir_tmp}"
   exit 0
 }
@@ -927,7 +940,8 @@ show_help() {
   echo
   echo 'ACTION:'
   echo '  install                   Install/Update Xray'
-  echo '  update-geodata            Update geoip.dat and geosite.dat only'
+  echo '  update-geodata            Download/update GeoIP full and GeoSite expanded only'
+  echo '                            Xray bundles GeoIP lite and GeoSite standard; see https://github.com/XTLS/Xray-rules-dat'
   echo '  remove                    Remove Xray'
   echo '  help                      Show help'
   echo '  check                     Check if Xray can be updated'
@@ -952,6 +966,8 @@ show_help() {
   echo "    --without-logfiles        Don't install /var/log/xray"
   echo "    --logrotate [time]        Install with logrotate."
   echo "                              [time] need be in the format of 12:34:56, under 10:00:00 should be start with 0, e.g. 01:23:45."
+  echo "    --manually-restart-later  ${red}[RISKY]${reset} Service won't be restarted during installation."
+  echo "                              ${red}Inconsistency may occur. You must manually restart the service after the installation.${reset}"
   echo '  update-geodata:'
   echo '    -p, --proxy               Download through a proxy server'
   echo '  remove:'
@@ -1039,7 +1055,9 @@ main() {
   # Determine if Xray is running
   if systemctl list-unit-files | grep -w 'xray' >/dev/null; then
     if [[ -n "$(pidof xray)" ]]; then
-      stop_xray
+      if [[ "$NO_RESTART" -eq '0' ]]; then
+        stop_xray
+      fi
       XRAY_RUNNING='1'
     fi
   fi
@@ -1100,8 +1118,15 @@ main() {
   echo "info: Xray $CURRENT_VERSION is installed."
   echo "You may need to execute a command to remove dependent software: $PACKAGE_MANAGEMENT_REMOVE curl unzip"
   if [[ "$XRAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '1' ]] && [[ "$FORCE" -eq '0' ]] && [[ "$REINSTALL" -eq '0' ]]; then
-    if [[ "$XRAY_RUNNING" -eq '1' ]]; then
-      start_xray
+    if [[ "$NO_RESTART" -eq '0' ]]; then
+      if [[ "$XRAY_RUNNING" -eq '1' ]]; then
+        start_xray
+      fi
+    else
+      if [[ "$XRAY_RUNNING" -eq '1' ]]; then
+        echo "${red}Xray has been installed but a service restart is required."
+        echo "${red}To prevent inconsistency, manually restart the service as soon as possible.${reset}"
+      fi
     fi
   else
     systemctl start xray
